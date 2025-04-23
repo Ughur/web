@@ -10,6 +10,7 @@
 
   --color-body: var(--color-green-400);
   --color-heading: var(--color-cyan-500);
+  --color-background: var(--color-slate-950);
 }
 
 @layer components {
