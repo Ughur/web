@@ -1,3 +1,6 @@
+import ParticleImage from './animations/ParticleImage';
+import PixelArtBackground from './animations/PixelArtBackground';
+
 export default function Home() {
   return (
     <>
@@ -58,6 +61,8 @@ export default function Home() {
           />
         </div>
       </form>
+      <PixelArtBackground />
+      <ParticleImage imagePath='/images/portrait.jpg' brightnessThreshold={0.9} interactionRadius={60} />
     </>
   );
 }
