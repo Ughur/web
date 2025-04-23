@@ -1,24 +1,45 @@
 @import 'tailwindcss';
 
+:root {
+  --scanline-opacity: 0.1;
+}
+
 @theme {
   --font-pressStart: var(--font-pressStart);
   --font-vt323: var(--font-vt323);
 
-  --color-primary: var(--color-cyan-500);
-  --color-secondary: var(--color-fuchsia-700);
-  --color-tertiary: var(--color-pink-500);
+  --color-primary: var(--color-cyan-300);
+  --color-secondary: var(--color-pink-400);
 
-  --color-body: var(--color-green-400);
-  --color-heading: var(--color-cyan-500);
-  --color-background: var(--color-slate-950);
+  --color-accent-fuchsia: var(--color-fuchsia-600);
+  --color-accent-purple: var(--color-purple-500);
+  --color-accent-green: oklch(0.87 0.2785 142.72);
+
+  --color-body: var(--color-green-600);
+  --color-heading: var(--color-cyan-300);
+  --color-background: var(--color-neutral-900);
+}
+
+@layer base {
+  body::before {
+    content: '';
+    @apply fixed inset-0 pointer-events-none z-50;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, var(--scanline-opacity)) 0%,
+      rgba(0, 0, 0, var(--scanline-opacity)) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  }
 }
 
 @layer components {
   .heading {
-    @apply text-2xl md:text-3xl lg:text-4xl font-bold text-heading;
+    @apply text-2xl md:text-3xl lg:text-4xl text-heading font-pressStart;
   }
   .body-text {
-    @apply text-base md:text-lg lg:text-xl text-body;
+    @apply text-base md:text-lg lg:text-xl text-body font-vt323;
   }
   .flex-responsive {
     @apply flex flex-col md:flex-row;
@@ -28,6 +49,49 @@
   }
   .m-responsive {
     @apply m-4 sm:m-6 md:m-8 lg:m-10;
+  }
+  .btn {
+    @apply font-pressStart cursor-pointer 
+    text-white 
+    py-2 px-6 border-2
+    transition-colors duration-300
+    [transition-property:border-color]
+    [transition-duration:0.2s]
+    shadow-[4px_4px_0px_0px_#000]
+    hover:shadow-[2px_2px_0px_0px_#000]
+    active:shadow-none
+    active:translate-x-1
+    active:translate-y-1;
+  }
+
+  .btn-primary {
+    @apply bg-accent-fuchsia border-accent-fuchsia
+           hover:bg-secondary hover:border-secondary;
+  }
+  .btn-secondary {
+    @apply bg-primary border-primary
+           hover:bg-accent-purple hover:border-accent-purple;
+  }
+  .btn-ghost {
+    @apply border-primary hover:border-secondary hover:text-secondary 
+            font-vt323 bg-transparent text-accent-green text-3xl
+            active:translate-x-0 active:translate-y-0;
+  }
+  .link {
+    @apply text-primary hover:text-secondary font-pressStart transition-colors duration-300;
+  }
+  .form-group {
+    @apply flex flex-col gap-2;
+  }
+  .form-label {
+    @apply text-secondary font-pressStart;
+  }
+  .form-input {
+    @apply bg-neutral-700 border-2 
+    border-primary text-accent-green
+    font-vt323 p-2 placeholder:text-gray-300
+    outline-none focus:border-secondary;
+    
   }
 }
 

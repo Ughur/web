@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${pressStart.variable} ${vt323.variable} antialiased bg-dots bg-background`}
+        className={`${pressStart.variable} ${vt323.variable} antialiased bg-dots bg-background text-body`}
       >
         {children}
       </body>
