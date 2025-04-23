@@ -11,3 +11,39 @@
   --color-body: var(--color-green-400);
   --color-heading: var(--color-cyan-500);
 }
+
+@layer components {
+  .heading {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold text-heading;
+  }
+  .body-text {
+    @apply text-base md:text-lg lg:text-xl text-body;
+  }
+  .flex-responsive {
+    @apply flex flex-col md:flex-row;
+  }
+  .p-responsive {
+    @apply p-4 sm:p-6 md:p-8 lg:p-10;
+  }
+  .m-responsive {
+    @apply m-4 sm:m-6 md:m-8 lg:m-10;
+  }
+}
+
+@layer utilities {
+  .bg-grid {
+    background-size: 50px 50px;
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 255, 255, 0.1) 1px,
+      transparent 1px
+    );
+  }
+  .bg-dots {
+    background-image: radial-gradient(
+      rgba(0, 255, 255, 0.15) 1px,
+      transparent 1px
+    );
+    background-size: 20px 20px;
+  }
+}
