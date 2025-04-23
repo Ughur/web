@@ -28,9 +28,12 @@ const PixelArtBackground = ({
     if (!containerRef.current) return;
 
     let p5Instance: p5Type;
+    let isComponentMounted = true;
 
     const initP5 = async () => {
       const p5 = (await import('p5')).default;
+
+      if (!isComponentMounted) return;
 
       const sketch = (p: p5Type) => {
         const grid: number[][] = Array(gridSize)
@@ -96,8 +99,10 @@ const PixelArtBackground = ({
     initP5();
 
     return () => {
+      isComponentMounted = false;
       if (p5Instance) {
         p5Instance.remove();
+        containerRef.current?.childNodes.forEach((node) => node.remove());
       }
     };
   }, [colors, gridSize, frameRate, pixelMargin, pixelRadius, opacity]);
