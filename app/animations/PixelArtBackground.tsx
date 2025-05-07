@@ -41,7 +41,10 @@ const PixelArtBackground = ({
           .map(() => Array(gridSize).fill(0));
 
         p.setup = () => {
-          const canvas = p.createCanvas(window.innerWidth, window.innerHeight);
+          const canvas = p.createCanvas(
+            window.innerWidth - 20,
+            window.innerHeight
+          );
           canvas.parent(containerRef.current!);
           p.frameRate(frameRate);
         };
@@ -89,7 +92,7 @@ const PixelArtBackground = ({
         };
 
         p.windowResized = () => {
-          p.resizeCanvas(window.innerWidth, window.innerHeight);
+          p.resizeCanvas(window.innerWidth - 20, window.innerHeight);
         };
       };
 

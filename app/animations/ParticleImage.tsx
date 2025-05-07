@@ -210,7 +210,10 @@ const ParticleImage = ({
         };
 
         p.setup = () => {
-          const canvas = p.createCanvas(window.innerWidth - 20, window.innerHeight - 25);
+          const canvas = p.createCanvas(
+            window.innerWidth - 20,
+            window.innerHeight - 25
+          );
           canvas.parent(containerRef.current!);
           p.background(26, 26, 26);
           mousePos = p.createVector(p.width / 2, p.height / 2);
