@@ -211,8 +211,8 @@ const ParticleImage = ({
 
         p.setup = () => {
           const canvas = p.createCanvas(
-            window.innerWidth - 20,
-            window.innerHeight - 25
+            containerRef.current?.clientWidth || window.innerWidth - 20,
+            containerRef.current?.clientHeight || window.innerHeight - 25
           );
           canvas.parent(containerRef.current!);
           p.background(26, 26, 26);
@@ -309,7 +309,10 @@ const ParticleImage = ({
         };
 
         p.windowResized = () => {
-          p.resizeCanvas(window.innerWidth - 20, window.innerHeight - 25);
+          p.resizeCanvas(
+            containerRef.current?.clientWidth || window.innerWidth - 20,
+            containerRef.current?.clientHeight || window.innerHeight - 25
+          );
           if (isImageLoaded) {
             initializeParticles();
           }

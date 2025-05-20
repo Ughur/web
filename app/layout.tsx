@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Press_Start_2P, VT323 } from 'next/font/google';
 import './globals.css';
+import Navbar from './Navbar';
 
 const pressStart = Press_Start_2P({
   weight: '400',
@@ -27,8 +28,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${pressStart.variable} ${vt323.variable} antialiased bg-dots bg-background text-body`}
+        className={`${pressStart.variable} ${vt323.variable} pixelated bg-background text-body`}
       >
+        <Navbar />
         {children}
       </body>
     </html>
