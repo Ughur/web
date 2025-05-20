@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -16,12 +16,17 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
-    <nav className='h-screen md:h-auto flex flex-col justify-center items-center p-5'>
+    <nav
+      className={`${
+        isOpen && isMobile ? 'h-screen' : 'h-auto'
+      } flex flex-col justify-center items-center p-5 bg-background`}
+    >
       <MenuIcon
         className='absolute top-5 left-1/2 -translate-x-1/2 w-8 h-8 text-primary cursor-pointer hover:text-secondary md:hidden'
         onClick={toggleMenu}
@@ -49,7 +54,7 @@ const Navbar = () => {
               />
             </Link>
             <Link href='/' className='link block md:hidden'>
-              Home
+              home
             </Link>
           </li>
           <li>
