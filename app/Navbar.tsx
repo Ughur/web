@@ -25,10 +25,11 @@ const Navbar = () => {
     <nav
       className={`${
         isOpen && isMobile ? 'h-screen' : 'h-auto'
-      } flex flex-col justify-center items-center p-5 bg-background`}
+      } fixed top-0 left-0 w-full flex flex-col justify-center items-center p-5 bg-background z-100`}
     >
       <MenuIcon
-        className='absolute top-5 left-1/2 -translate-x-1/2 w-8 h-8 text-primary cursor-pointer hover:text-secondary md:hidden'
+        className='absolute top-5 left-1/2 -translate-x-1/2 w-8 h-8
+        text-primary cursor-pointer hover:text-secondary md:hidden'
         onClick={toggleMenu}
       />
       {(isOpen || !isMobile) && (

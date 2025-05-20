@@ -46,7 +46,7 @@ const ParticleImage = ({
   particleColor = '#1abc9c',
   hoverColor = '#0099cc',
   detailLevel = 8,
-  targetHeight = 400,
+  targetHeight,
   minRadius = 0.5,
   maxRadius = 4,
   interactionRadius = 30,
@@ -111,12 +111,85 @@ const ParticleImage = ({
         };
 
         const initializeParticles = () => {
+          if (!sourceImg || !sourceImg.width || !sourceImg.height) {
+            console.error(
+              'ParticleImage: Source image not loaded or has invalid dimensions.',
+              sourceImg?.width,
+              sourceImg?.height
+            );
+            particles.length = 0;
+            isImageLoaded = false;
+            return;
+          }
           sourceImg.loadPixels();
           startTime = p.millis();
 
-          const scale = targetHeight / sourceImg.height;
+          let scale;
+          let finalCanvasHeight;
+          const currentCanvasWidth = p.width; // Already set by setup or windowResized
+
+          if (typeof targetHeight === 'number' && targetHeight > 0) {
+            if (sourceImg.height > 0) {
+              scale = targetHeight / sourceImg.height;
+              finalCanvasHeight = targetHeight;
+              const imageScaledWidth = sourceImg.width * scale;
+              if (imageScaledWidth > currentCanvasWidth) {
+                // If image scaled by height is too wide
+                scale = currentCanvasWidth / sourceImg.width; // Rescale to fit width
+                finalCanvasHeight = sourceImg.height * scale;
+              }
+            } else {
+              scale = 0; // Invalid source image height
+              finalCanvasHeight = p.height; // Fallback to current canvas height
+              console.warn(
+                'ParticleImage: Cannot use targetHeight due to source image height being zero.'
+              );
+            }
+            if (isFinite(finalCanvasHeight) && finalCanvasHeight > 0) {
+              p.resizeCanvas(currentCanvasWidth, finalCanvasHeight);
+            } else {
+              finalCanvasHeight = p.height; // Fallback
+            }
+          } else {
+            // targetHeight is NOT provided, scale to fit container width
+            if (
+              currentCanvasWidth > 0 &&
+              sourceImg.width > 0 &&
+              sourceImg.height > 0
+            ) {
+              scale = currentCanvasWidth / sourceImg.width;
+              finalCanvasHeight = sourceImg.height * scale;
+              if (isFinite(finalCanvasHeight) && finalCanvasHeight > 0) {
+                p.resizeCanvas(currentCanvasWidth, finalCanvasHeight);
+              } else {
+                finalCanvasHeight = p.height; // Fallback to current canvas height
+                console.warn(
+                  'ParticleImage: Calculated finalCanvasHeight is invalid.',
+                  finalCanvasHeight
+                );
+              }
+            } else {
+              scale = 0;
+              finalCanvasHeight = p.height; // Fallback
+              console.warn(
+                'ParticleImage: Cannot auto-scale image for width due to invalid canvas or image dimensions.'
+              );
+            }
+          }
+
+          if (!isFinite(scale) || scale <= 0) {
+            console.warn(
+              'ParticleImage: Invalid scale calculated',
+              scale,
+              '. Aborting particle initialization.'
+            );
+            particles.length = 0;
+            isImageLoaded = false;
+            return;
+          }
+
           const scaledWidth = sourceImg.width * scale;
-          const scaledHeight = sourceImg.height * scale;
+          const scaledHeight = sourceImg.height * scale; // This is the image's visual scaled height
 
           const circleRadius = Math.min(scaledWidth, scaledHeight) / 2;
           const startX = getPositionX(scaledWidth);
@@ -210,10 +283,13 @@ const ParticleImage = ({
         };
 
         p.setup = () => {
-          const canvas = p.createCanvas(
-            containerRef.current?.clientWidth || window.innerWidth - 20,
-            containerRef.current?.clientHeight || window.innerHeight - 25
-          );
+          const initialWidth =
+            containerRef.current?.clientWidth || window.innerWidth - 20;
+          // Initial height can be container's height; initializeParticles will adjust if no targetHeight
+          const initialHeight =
+            containerRef.current?.clientHeight || window.innerHeight - 25;
+
+          const canvas = p.createCanvas(initialWidth, initialHeight);
           canvas.parent(containerRef.current!);
           p.background(26, 26, 26);
           mousePos = p.createVector(p.width / 2, p.height / 2);
@@ -309,12 +385,16 @@ const ParticleImage = ({
         };
 
         p.windowResized = () => {
-          p.resizeCanvas(
-            containerRef.current?.clientWidth || window.innerWidth - 20,
-            containerRef.current?.clientHeight || window.innerHeight - 25
-          );
+          const newWidth =
+            containerRef.current?.clientWidth || window.innerWidth - 20;
+          // Temporary height, initializeParticles will set the final one based on logic
+          const tempHeight =
+            containerRef.current?.clientHeight || window.innerHeight - 25;
+
+          p.resizeCanvas(newWidth, tempHeight);
+
           if (isImageLoaded) {
-            initializeParticles();
+            initializeParticles(); // This will re-calculate scale and call p.resizeCanvas again
           }
         };
       };
