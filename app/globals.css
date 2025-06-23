@@ -8,23 +8,28 @@
   --font-pressStart: var(--font-pressStart);
   --font-vt323: var(--font-vt323);
 
-  --color-primary: oklch(0.91 0.1431 194.93);
-  --color-secondary: var(--color-pink-400);
+  --color-primary: oklch(21.78% 0 0);
+  --color-primary-light: oklch(28.5% 0 0);
+  --color-primary-dark: oklch(16.84% 0 0);
+  --color-secondary: oklch(19.86% 0.0336 267.66);
 
-  --color-accent-fuchsia: var(--color-fuchsia-600);
-  --color-accent-purple: var(--color-purple-500);
-  --color-accent-green: oklch(0.87 0.2785 142.72);
-  --color-accent-amber: var(--color-amber-500);
+  --color-accent-cyan: oklch(90.54% 0.15455 194.7689);
+  --color-accent-magenta: oklch(70.17% 0.3225 328.36);
+  --color-accent-amber: oklch(81.24% 0.170378 76.3908);
+  --color-accent-purple: oklch(63.25% 0.253261 306.1227);
+  --color-accent-pink: oklch(72.83% 0.1971 351.99);
 
-  --color-body: var(--color-green-600);
-  --color-heading: var(--color-cyan-300);
-  --color-background: var(--color-neutral-900);
+  --color-body: oklch(87.16% 0.2785 142.72);
+  --color-body-light: oklch(88.67% 0.2344 143.28);
 }
 
 @layer base {
+  * {
+    image-rendering: pixelated;
+  }
   html,
   body {
-    @apply overflow-x-hidden
+    @apply overflow-x-hidden bg-primary;
   }
   body {
     @apply text-body font-vt323;
@@ -44,19 +49,16 @@
 
 @layer components {
   .heading {
-    @apply text-2xl text-[2.5rem] md:text-[3rem] lg:text-[3.5rem]  text-heading font-pressStart;
+    @apply text-2xl text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] text-accent-cyan font-pressStart;
+  }
+  .heading-secondary {
+    @apply text-[1.5rem] md:text-[1.2rem] lg:text-[1.4rem]  font-pressStart text-accent-cyan;
   }
   .body-text {
     @apply text-base md:text-lg lg:text-xl text-body font-vt323;
   }
-  .flex-responsive {
-    @apply flex flex-col md:flex-row;
-  }
-  .p-responsive {
-    @apply p-4 sm:p-6 md:p-8 lg:p-10;
-  }
-  .m-responsive {
-    @apply m-4 sm:m-6 md:m-8 lg:m-10;
+  .card-text {
+    @apply font-pressStart;
   }
   .btn {
     @apply font-pressStart cursor-pointer 
@@ -67,24 +69,26 @@
     hover:shadow-[2px_2px_0px_0px_#000]
     active:shadow-none text-sm md:text-base
     active:translate-x-1
-    active:translate-y-1
+    active:translate-y-1;
   }
 
   .btn-primary {
-    @apply bg-accent-fuchsia border-accent-fuchsia
-           hover:bg-secondary hover:border-secondary;
+    @apply bg-accent-magenta border-accent-magenta
+           hover:bg-accent-pink hover:border-accent-pink;
   }
   .btn-secondary {
-    @apply bg-primary border-primary
+    @apply bg-accent-cyan border-accent-cyan
            hover:bg-accent-purple hover:border-accent-purple;
   }
   .btn-ghost {
-    @apply border-primary hover:border-secondary hover:text-secondary 
-            font-vt323 bg-transparent text-accent-green text-3xl
+    @apply border-accent-cyan hover:border-accent-pink hover:text-accent-pink 
+            font-vt323 bg-transparent text-body text-3xl
             active:translate-x-0 active:translate-y-0;
   }
   .link {
-    @apply text-primary hover:text-secondary font-pressStart transition-colors duration-300 text-lg md:text-[0.8rem] lg:text-base;
+    @apply text-accent-cyan hover:text-accent-pink font-pressStart
+     transition-colors duration-300 text-lg md:text-[0.8rem] 
+     lg:text-base active:text-accent-pink;
   }
   .form-group {
     @apply flex flex-col gap-2;
@@ -94,9 +98,21 @@
   }
   .form-input {
     @apply bg-neutral-700 border-2 
-    border-primary text-accent-green
+    border-primary text-body
     font-vt323 p-2 placeholder:text-gray-300
     outline-none focus:border-secondary;
+  }
+  .card {
+    @apply border-2 border-accent-cyan p-4 shadow-[4px_4px_0px_0px_#000];
+  }
+  .icon-primary {
+    @apply w-8 h-8 text-accent-cyan;
+  }
+  .list-item-layout {
+    @apply flex items-center gap-2;
+  }
+  .list-item-icon {
+    @apply w-4 h-4 text-accent-cyan;
   }
 }
 
