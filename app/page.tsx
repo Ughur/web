@@ -6,7 +6,7 @@ import { Code, Cpu, Terminal } from 'lucide-react';
 export default function Home() {
   return (
     <section className='relative h-svh'>
-      <div className='container mx-auto px-4 pt-45 md:pt-4 z-10'>
+      <div className='container mx-auto px-4 pt-45 md:pt-5 z-10'>
         <div className='flex flex-col lg:flex-row items-center justify-between gap-10'>
           <div className='space-y-8 relative z-20'>
             <div className='space-y-4'>

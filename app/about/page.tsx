@@ -5,11 +5,11 @@ const page = () => {
     <>
       <div className='fixed bg-dots min-h-screen w-full'></div>
       <div className='relative z-10'>
-        <div className='max-w-4xl mx-auto px-4 py-30 space-y-10'>
+        <div className='max-w-5xl mx-auto px-4 py-30 space-y-10'>
           <div className='card p-5 space-y-2 '>
             <div className='flex items-center gap-2'>
               <Terminal className='icon-primary' />
-              <h1 className='heading-secondary'>profile.exe</h1>
+              <h1>profile.exe</h1>
             </div>
             <p className='card-text text-accent-pink'>System Status: Online</p>
             <p className='card-text text-accent-pink'>

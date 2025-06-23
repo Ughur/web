@@ -54,7 +54,7 @@ const Navbar = () => {
       id: 'missions',
       href: '/work',
       text: 'missions.log',
-      active: activeLink === '/projects',
+      active: activeLink === '/work',
     },
     {
       id: 'diary',
