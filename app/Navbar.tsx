@@ -37,7 +37,6 @@ const Navbar = () => {
 
   useEffect(() => {
     setActiveLink(pathname);
-    console.log(activeLink);
     if (isOpen) {
       setIsOpen(false);
     }
@@ -58,13 +57,13 @@ const Navbar = () => {
     },
     {
       id: 'diary',
-      href: '/',
+      href: '/blog',
       text: 'dev diary',
       active: activeLink === '/blog',
     },
     {
       id: 'telepathy',
-      href: '/',
+      href: '/contact',
       text: 'telepathy',
       active: activeLink === '/contact',
     },
@@ -125,13 +124,18 @@ const Navbar = () => {
           </Link>
         </li>
 
-        {primaryNavLinks.slice(2).map((link) => (
-          <li key={link.id} className={commonLiClass}>
-            <Link href={link.href} className='link'>
-              {link.text}
-            </Link>
-          </li>
-        ))}
+        {primaryNavLinks.slice(2).map((link) => {
+          return (
+            <li key={link.id} className={commonLiClass}>
+              <Link
+                href={link.href}
+                className={`link ${link.active ? 'text-accent-pink' : ''}`}
+              >
+                {link.text}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

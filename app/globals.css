@@ -97,16 +97,16 @@
     @apply flex flex-col gap-2;
   }
   .form-label {
-    @apply text-secondary font-pressStart;
+    @apply text-accent-pink font-pressStart;
   }
   .form-input {
-    @apply bg-neutral-700 border-2 
-    border-primary text-body
+    @apply bg-primary-light border-2 w-full
+    border-accent-cyan text-body
     font-vt323 p-2 placeholder:text-gray-300
-    outline-none focus:border-secondary;
+    outline-none focus:border-accent-pink;
   }
   .card {
-    @apply border-2 border-accent-cyan p-4 shadow-[4px_4px_0px_0px_#000] 
+    @apply border-2 border-accent-cyan p-5 shadow-[4px_4px_0px_0px_#000] 
     transition-colors duration-300;
   }
   .icon-primary {
