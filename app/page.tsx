@@ -26,7 +26,7 @@ export default function Home() {
               pixel-perfect web experiences with modern technologies
             </p>
             <div className='flex gap-6'>
-              <Link href='/projects' className='btn btn-primary'>
+              <Link href='/work' className='btn btn-primary'>
                 View Projects
               </Link>
               <Link href='/blog' className='btn btn-secondary'>
