@@ -95,7 +95,10 @@ const Navbar = () => {
         text-accent-cyan cursor-pointer focus:text-accent-pink 
         active:text-accent-pink hover:text-accent-pink md:hidden
         ${isOpen ? 'text-accent-pink' : ''}`}
-        onClick={toggleMenu}
+        onClick={() => {
+          playSound('click');
+          toggleMenu();
+        }}
       />
       <ul
         className={`${
