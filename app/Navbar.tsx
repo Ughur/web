@@ -4,12 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import useSound from './hooks/useSound';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('');
   const pathname = usePathname();
+  const playSound = useSound();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -105,6 +107,8 @@ const Navbar = () => {
             <Link
               href={link.href}
               className={`link ${link.active ? 'text-accent-pink' : ''}`}
+              onClick={() => playSound('click')}
+              onMouseEnter={() => playSound('hover')}
             >
               {link.text}
             </Link>
@@ -112,7 +116,12 @@ const Navbar = () => {
         ))}
 
         <li>
-          <Link href='/' className='link hidden md:block'>
+          <Link
+            href='/'
+            className='link hidden md:block'
+            onClick={() => playSound('click')}
+            onMouseEnter={() => playSound('hover')}
+          >
             <Image
               src='/images/yay.png'
               alt='logo'
@@ -121,7 +130,12 @@ const Navbar = () => {
               className='h-10 w-10 object-cover object-left'
             />
           </Link>
-          <Link href='/' className='link block md:hidden'>
+          <Link
+            href='/'
+            className='link block md:hidden'
+            onClick={() => playSound('click')}
+            onMouseEnter={() => playSound('hover')}
+          >
             home
           </Link>
         </li>
@@ -132,6 +146,8 @@ const Navbar = () => {
               <Link
                 href={link.href}
                 className={`link ${link.active ? 'text-accent-pink' : ''}`}
+                onClick={() => playSound('click')}
+                onMouseEnter={() => playSound('hover')}
               >
                 {link.text}
               </Link>
