@@ -89,8 +89,10 @@ const Navbar = () => {
       `}
     >
       <MenuIcon
-        className='absolute top-5 left-1/2 -translate-x-1/2 w-8 h-8
-        text-accent-cyan cursor-pointer hover:text-accent-pink md:hidden'
+        className={`absolute top-5 left-1/2 -translate-x-1/2 w-8 h-8
+        text-accent-cyan cursor-pointer focus:text-accent-pink 
+        active:text-accent-pink hover:text-accent-pink md:hidden
+        ${isOpen ? 'text-accent-pink' : ''}`}
         onClick={toggleMenu}
       />
       <ul
