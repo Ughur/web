@@ -16,7 +16,7 @@ const page = () => {
   return (
     <>
       <div className='fixed bg-dots min-h-screen w-full'></div>
-      <div className='relative max-w-6xl mx-auto px-4 py-30 space-y-10'>
+      <div className='relative max-w-5xl mx-auto px-4 py-30 space-y-10'>
         <div className='card p-5 space-y-2'>
           <div className='flex items-center gap-2'>
             <Terminal className='icon-primary' />
