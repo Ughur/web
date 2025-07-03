@@ -107,7 +107,7 @@ const page = () => {
             <div className='flex flex-col gap-2'>
               <div className='flex items-center gap-2'>
                 <Coffee className='icon-primary' />
-                <h1 className='heading-secondary'>current_status</h1>
+                <h2>current_status</h2>
               </div>
               <p className='card-text text-accent-pink'>
                 Status: Available for new missions
