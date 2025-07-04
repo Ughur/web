@@ -10,6 +10,13 @@ import {
 import Link from 'next/link';
 import React from 'react';
 
+const postTypeColors: { [key: string]: string } = {
+  Article: 'text-accent-amber',
+  DevLog: 'text-accent-pink',
+  Tutorial: 'text-accent-cyan',
+  default: 'text-gray-400',
+};
+
 const page = async () => {
   const { data: posts, error } = await supabase
     .from('posts')
@@ -53,7 +60,11 @@ const page = async () => {
               <div className='flex flex-col md:flex-row md:justify-between gap-3'>
                 <div className='flex items-center gap-2 mb-3'>
                   <Cpu className='icon-primary w-5 h-5' />
-                  <p className='text-accent-amber font-pressStart text-xs md:text-sm'>
+                  <p
+                    className={`font-pressStart text-xs md:text-sm ${
+                      postTypeColors[post.post_type] || postTypeColors.default
+                    }`}
+                  >
                     [{post.post_type || 'Article'}]
                   </p>
                 </div>

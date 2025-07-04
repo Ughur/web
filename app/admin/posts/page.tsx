@@ -65,7 +65,7 @@ export default async function PostsPage() {
                 </td>
                 <td className='p-4'>
                   <Link
-                    href={`/admin/posts/${post.id}/edit`}
+                    href={`/admin/posts/edit/${post.id}`}
                     className='text-blue-400 hover:underline'
                   >
                     Edit

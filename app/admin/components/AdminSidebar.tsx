@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, FileText, MessageSquare } from 'lucide-react';
+import { Home, FileText, MessageSquare, Briefcase } from 'lucide-react';
 
 const links = [
   { href: '/admin', label: 'Dashboard', icon: Home },
   { href: '/admin/posts', label: 'Posts', icon: FileText },
+  { href: '/admin/projects', label: 'Projects', icon: Briefcase },
   { href: '/admin/contacts', label: 'Contacts', icon: MessageSquare },
 ];
 

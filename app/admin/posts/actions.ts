@@ -44,3 +44,50 @@ export async function createPostAction(postData: {
   revalidatePath('/blog');
   redirect('/admin/posts');
 }
+
+export async function updatePostAction(
+  id: string,
+  postData: {
+    title: string;
+    content: string;
+    description: string;
+    tags: { id: string; text: string }[];
+    post_type: string;
+  }
+) {
+  const { title, content, description, tags, post_type } = postData;
+
+  // Calculate read time
+  const words = content.trim().split(/\s+/).length;
+  const read_time = Math.ceil(words / 200);
+
+  const tagsArray = tags.map((tag) => tag.text);
+
+  const { data, error } = await supabase
+    .from('posts')
+    .update({
+      title,
+      content,
+      description,
+      tags: tagsArray,
+      post_type,
+      read_time,
+    })
+    .eq('id', id)
+    .select('slug');
+
+  if (error || !data || data.length === 0) {
+    const errorMessage = error
+      ? error.message
+      : 'Post not found or failed to update.';
+    console.error('Error updating post:', errorMessage);
+    return { error: `Failed to update post: ${errorMessage}` };
+  }
+
+  revalidatePath('/admin/posts');
+  revalidatePath('/blog');
+  if (data[0]?.slug) {
+    revalidatePath(`/blog/${data[0].slug}`);
+  }
+  redirect('/admin/posts');
+}

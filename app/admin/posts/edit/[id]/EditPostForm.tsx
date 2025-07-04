@@ -1,22 +1,37 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { createPostAction } from '../actions';
+import { updatePostAction } from '../../actions';
 import { WithContext as ReactTags, SEPARATORS } from 'react-tag-input';
 import type { Tag } from 'react-tag-input';
 import dynamic from 'next/dynamic';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
-import TagInputStyles from '../../components/TagInputStyles';
+import TagInputStyles from '../../../components/TagInputStyles';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
-export default function NewPostPage() {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [content, setContent] = useState('**Hello world!!!**');
-  const [tags, setTags] = useState<Tag[]>([]);
-  const [postType, setPostType] = useState('Article');
+type Post = {
+  id: string;
+  created_at: string;
+  title: string;
+  content: string;
+  slug: string;
+  description: string;
+  tags: string[];
+  post_type: string;
+  read_time: number;
+  comments_count: number;
+};
+
+export default function EditPostForm({ post }: { post: Post }) {
+  const [title, setTitle] = useState(post.title);
+  const [description, setDescription] = useState(post.description);
+  const [content, setContent] = useState(post.content);
+  const [tags, setTags] = useState<Tag[]>(
+    post.tags.map((tag) => ({ id: tag, text: tag }))
+  );
+  const [postType, setPostType] = useState(post.post_type);
   const [error, setError] = useState<string | null>(null);
 
   const [isPending, startTransition] = useTransition();
@@ -46,11 +61,11 @@ export default function NewPostPage() {
     }
 
     startTransition(async () => {
-      const result = await createPostAction({
+      const result = await updatePostAction(post.id, {
         title,
         content,
         description,
-        tags: tags.map((tag) => ({ id: tag.id, text: tag.text })),
+        tags,
         post_type: postType,
       });
 
@@ -61,9 +76,8 @@ export default function NewPostPage() {
   };
 
   return (
-    <div className='card bg-gray-800 p-6 rounded-lg'>
+    <>
       <TagInputStyles />
-      <h1 className='text-2xl font-bold mb-6'>Create New Post</h1>
       <form onSubmit={handleSubmit} className='space-y-6'>
         <div className='flex flex-col gap-2'>
           <label htmlFor='title' className='form-label'>
@@ -149,9 +163,9 @@ export default function NewPostPage() {
           className='btn btn-primary w-full'
           disabled={isPending}
         >
-          {isPending ? 'Creating...' : 'Create Post'}
+          {isPending ? 'Saving...' : 'Save Changes'}
         </button>
       </form>
-    </div>
+    </>
   );
 }

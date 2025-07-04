@@ -1,4 +1,5 @@
 import { supabase } from '@/utils/supabase/client';
+import Link from 'next/link';
 
 export const revalidate = 60; // Revalidate data every 60 seconds
 
@@ -40,7 +41,14 @@ export default async function ContactSubmissionsPage() {
                 </td>
                 <td className='p-4'>{submission.name}</td>
                 <td className='p-4'>{submission.email}</td>
-                <td className='p-4 max-w-md truncate'>{submission.message}</td>
+                <td className='p-4'>
+                  <Link
+                    href={`/admin/contacts/${submission.id}`}
+                    className='btn btn-primary'
+                  >
+                    View
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
