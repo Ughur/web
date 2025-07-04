@@ -10,24 +10,22 @@ import {
 import React from 'react';
 import Markdown from '../Markdown';
 import Link from 'next/link';
+import { supabase } from '@/utils/supabase/client';
 
-const page = () => {
-  const markdownContent = `
-# This is a heading
+const page = async ({ params }: { params: { slug: string } }) => {
+  const { data: post, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('slug', params.slug)
+    .single();
 
-This is a paragraph with some **bold** and *italic* text.
+  if (error) {
+    return <p>Error loading post: {error.message}</p>;
+  }
 
-- List item 1
-- List item 2
-
-\`\`\`javascript
-console.log("hello world");
-\`\`\`
-
-> A blockquote
-
-[A link](https://example.com)
-`;
+  if (!post) {
+    return <p>Post not found</p>;
+  }
 
   return (
     <>
@@ -37,49 +35,37 @@ console.log("hello world");
           <div className='flex items-center gap-2 text-sm md:text-base'>
             <Cpu className='w-5 h-5 icon-primary' />
             <span className='font-pressStart text-accent-amber'>
-              [Tutorial]
+              [{post.post_type || 'Article'}]
             </span>
           </div>
-          <h1 className='text-xl md:text-4xl md:leading-loose'>
-            Implementing Neural Networks in TypeScript
-          </h1>
+          <h1 className='text-xl md:text-4xl md:leading-loose'>{post.title}</h1>
           <ul className='font-pressStart flex items-center gap-5 text-xs md:text-sm'>
             <li className='flex items-center gap-2 text-accent-cyan'>
               <Calendar className='w-5 h-5 icon-primary' />
-              <span>2025-01-01</span>
+              <span>{new Date(post.created_at).toLocaleDateString()}</span>
             </li>
             <li className='flex items-center gap-2 text-accent-pink'>
               <Clock className='w-5 h-5 icon-primary' />
-              <span>10 min</span>
+              <span>{post.read_time ? `${post.read_time} min` : 'N/A'}</span>
             </li>
             <li className='flex items-center gap-2 text-accent-amber'>
               <MessageSquare className='w-5 h-5 icon-primary' />
-              <span>12 comments</span>
+              <span>{post.comments_count} comments</span>
             </li>
           </ul>
         </div>
         <div className='mt-5'>
           <ul className='flex flex-wrap gap-2'>
-            <li className='tag flex items-center gap-2'>
-              <TagIcon className='icon-primary w-3 h-3' />
-              <span>Next.js</span>
-            </li>
-            <li className='tag flex items-center gap-2'>
-              <TagIcon className='icon-primary w-3 h-3' />
-              Node.js
-            </li>
-            <li className='tag flex items-center gap-2'>
-              <TagIcon className='icon-primary w-3 h-3' />
-              WebAssembly
-            </li>
-            <li className='tag flex items-center gap-2'>
-              <TagIcon className='icon-primary w-3 h-3' />
-              Rust
-            </li>
+            {post.tags?.map((tag: string) => (
+              <li key={tag} className='tag flex items-center gap-2'>
+                <TagIcon className='w-3 h-3 icon-primary' />
+                <span>{tag}</span>
+              </li>
+            ))}
           </ul>
         </div>
         <div className='card p-5'>
-          <Markdown content={markdownContent} />
+          <Markdown content={post.content} />
         </div>
         <div className='card p-5 flex flex-col md:flex-row gap-5 md:gap-0 justify-between'>
           <button className='btn btn-primary flex items-center gap-2'>

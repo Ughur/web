@@ -10,8 +10,22 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
   const pathname = usePathname();
   const playSound = useSound();
+
+  useEffect(() => {
+    const checkAdminStatus = () => {
+      const cookie = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('isAdmin='));
+      setIsAdmin(!!cookie);
+    };
+
+    checkAdminStatus();
+    // Re-check on path change, in case the cookie is set after login
+    // and the user navigates without a full page reload.
+  }, [pathname]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -70,6 +84,15 @@ const Navbar = () => {
       active: activeLink === '/contact',
     },
   ];
+
+  if (isAdmin) {
+    primaryNavLinks.push({
+      id: 'admin',
+      href: '/admin',
+      text: 'admin.sh',
+      active: activeLink.startsWith('/admin'),
+    });
+  }
 
   const commonLiClass = `transition-opacity duration-300 ease-in-out ${
     isScrolled && !isOpen

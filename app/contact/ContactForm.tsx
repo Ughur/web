@@ -1,20 +1,38 @@
 'use client';
 
 import { Mail, MessageCircle, MessageSquare, Send, User } from 'lucide-react';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import useSound from '../hooks/useSound';
+import { supabase } from '@/utils/supabase/client';
 
 const ContactForm = () => {
   const playSound = useSound();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [formStatus, setFormStatus] = useState('');
 
   const handleFocus = () => {
     playSound('hover');
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    playSound('success');
-    // You can add your form submission logic here.
+
+    const { error } = await supabase
+      .from('contact_submissions')
+      .insert([{ name, email, message }]);
+
+    if (error) {
+      setFormStatus('Error: ' + error.message);
+      playSound('failure');
+    } else {
+      setFormStatus('Message sent successfully!');
+      playSound('success');
+      setName('');
+      setEmail('');
+      setMessage('');
+    }
   };
 
   return (
@@ -38,6 +56,9 @@ const ContactForm = () => {
               className='form-input pl-9'
               placeholder='Enter your name'
               onFocus={handleFocus}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
         </div>
@@ -55,6 +76,9 @@ const ContactForm = () => {
               className='form-input pl-9'
               placeholder='Enter your email'
               onFocus={handleFocus}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
         </div>
@@ -71,6 +95,9 @@ const ContactForm = () => {
               className='form-input pl-9 h-40'
               placeholder='Enter your message'
               onFocus={handleFocus}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
             />
           </div>
         </div>
@@ -83,6 +110,7 @@ const ContactForm = () => {
           Transmit Message
         </button>
       </form>
+      {formStatus && <p className='mt-4 text-center'>{formStatus}</p>}
     </div>
   );
 };
