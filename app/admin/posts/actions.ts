@@ -91,3 +91,15 @@ export async function updatePostAction(
   }
   redirect('/admin/posts');
 }
+
+export async function deleteMultiplePostsAction(ids: string[]) {
+  const { error } = await supabase.from('posts').delete().in('id', ids);
+
+  if (error) {
+    console.error('Error deleting posts:', error);
+    return { error: `Failed to delete posts: ${error.message}` };
+  }
+
+  revalidatePath('/admin/posts');
+  revalidatePath('/blog');
+}

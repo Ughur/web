@@ -86,3 +86,14 @@ export async function deleteProjectAction(id: string) {
   revalidateProjectPaths();
   redirect('/admin/projects');
 }
+
+export async function deleteMultipleProjectsAction(ids: string[]) {
+  const { error } = await supabase.from('projects').delete().in('id', ids);
+
+  if (error) {
+    console.error('Error deleting projects:', error);
+    return { error: `Failed to delete projects: ${error.message}` };
+  }
+
+  revalidateProjectPaths();
+}
