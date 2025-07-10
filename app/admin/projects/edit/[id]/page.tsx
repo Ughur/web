@@ -2,11 +2,12 @@ import { createSupabaseServerClient } from '@/utils/supabase/server';
 import EditProjectForm from './EditProjectForm';
 
 const page = async ({ params }: { params: { id: string } }) => {
+  const { id } = await params;
   const supabase = await createSupabaseServerClient();
   const { data: project, error } = await supabase
     .from('projects')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (error || !project) {

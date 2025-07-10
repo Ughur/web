@@ -14,10 +14,11 @@ import { createSupabaseServerClient } from '@/utils/supabase/server';
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const supabase = await createSupabaseServerClient();
+  const { slug } = await params;
   const { data: post, error } = await supabase
     .from('posts')
     .select('*')
-    .eq('slug', params.slug)
+    .eq('slug', slug)
     .single();
 
   if (error) {
