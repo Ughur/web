@@ -1,4 +1,5 @@
 import { Code, Coffee, Star, Terminal, User } from 'lucide-react';
+import SpotifyWidget from '../components/SpotifyWidget';
 
 const page = () => {
   return (
@@ -33,6 +34,7 @@ const page = () => {
               </p>
             </div>
           </div>
+          <SpotifyWidget />
           <div className='card p-5 space-y-2 '>
             <div className='flex flex-col gap-2'>
               <div className='flex items-center gap-2'>
