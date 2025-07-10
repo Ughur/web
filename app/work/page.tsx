@@ -1,4 +1,4 @@
-import { supabase } from '@/utils/supabase/client';
+import { createSupabaseServerClient } from '@/utils/supabase/server';
 import { Github, Globe, Rocket, Star, Terminal } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
@@ -11,6 +11,7 @@ const statusColors: { [key: string]: string } = {
 };
 
 const page = async () => {
+  const supabase = createSupabaseServerClient();
   const { data: projects, error } = await supabase
     .from('projects')
     .select('*')

@@ -1,6 +1,6 @@
 'use server';
 
-import { supabase } from '@/utils/supabase/client';
+import { createSupabaseServerClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -20,6 +20,7 @@ const revalidateProjectPaths = () => {
 };
 
 export async function createProjectAction(projectData: ProjectData) {
+  const supabase = createSupabaseServerClient();
   const { name, description, status, tech_stack, repo_url, demo_url } =
     projectData;
 
@@ -49,6 +50,7 @@ export async function updateProjectAction(
   id: string,
   projectData: ProjectData
 ) {
+  const supabase = createSupabaseServerClient();
   const { name, description, status, tech_stack, repo_url, demo_url } =
     projectData;
 
@@ -76,6 +78,7 @@ export async function updateProjectAction(
 }
 
 export async function deleteProjectAction(id: string) {
+  const supabase = createSupabaseServerClient();
   const { error } = await supabase.from('projects').delete().eq('id', id);
 
   if (error) {
@@ -88,6 +91,7 @@ export async function deleteProjectAction(id: string) {
 }
 
 export async function deleteMultipleProjectsAction(ids: string[]) {
+  const supabase = createSupabaseServerClient();
   const { error } = await supabase.from('projects').delete().in('id', ids);
 
   if (error) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { supabase } from '@/utils/supabase/client';
+import { createSupabaseBrowserClient } from '@/utils/supabase/client';
 import { Trash2 } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { deleteMultipleContactsAction } from './actions';
@@ -15,6 +15,7 @@ type Submission = {
 };
 
 export default function ContactSubmissionsPage() {
+  const supabase = createSupabaseBrowserClient();
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();

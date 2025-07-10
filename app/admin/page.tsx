@@ -1,7 +1,8 @@
-import { supabase } from '@/utils/supabase/client';
+import { createSupabaseServerClient } from '@/utils/supabase/server';
 import { FileText, MessageSquare } from 'lucide-react';
+import { SupabaseClient } from '@supabase/supabase-js';
 
-async function getStats() {
+async function getStats(supabase: SupabaseClient) {
   const { count: postCount } = await supabase
     .from('posts')
     .select('*', { count: 'exact', head: true });
@@ -14,7 +15,8 @@ async function getStats() {
 }
 
 export default async function AdminDashboardPage() {
-  const { postCount, contactCount } = await getStats();
+  const supabase = createSupabaseServerClient();
+  const { postCount, contactCount } = await getStats(supabase);
 
   return (
     <div>

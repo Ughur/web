@@ -1,45 +1,35 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useFormState } from 'react-dom';
+import { login } from './actions';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+
+const initialState = {
+  error: '',
+};
 
 export default function LoginPage() {
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const router = useRouter();
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // In a real app, this would be a server action.
-    // For simplicity, we'll do a simple check here.
-    // The password should be in an environment variable.
-    if (password === 'pass') {
-      // On the server, you would set a secure, httpOnly cookie.
-      // We'll simulate this by setting a simple client-side value for now,
-      // but the proper implementation would be in a server action.
-      document.cookie = 'isAdmin=true; path=/';
-      router.push('/admin');
-    } else {
-      setError('Incorrect password');
-    }
-  };
+  const [state, formAction] = useFormState(login, initialState);
+  const searchParams = useSearchParams();
+  const message = searchParams.get('message');
 
   return (
     <div className='mt-50'>
       <h1>Admin Login</h1>
-      <form onSubmit={handleLogin}>
+      {message && (
+        <p style={{ color: 'green', marginBottom: '1rem' }}>{message}</p>
+      )}
+      <form action={formAction}>
+        <div>
+          <label htmlFor='email'>Email</label>
+          <input id='email' name='email' type='email' required />
+        </div>
         <div>
           <label htmlFor='password'>Password</label>
-          <input
-            id='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <input id='password' name='password' type='password' required />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {state?.error && <p style={{ color: 'red' }}>{state.error}</p>}
         <button type='submit'>Login</button>
       </form>
     </div>

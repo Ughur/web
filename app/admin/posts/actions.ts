@@ -1,6 +1,6 @@
 'use server';
 
-import { supabase } from '@/utils/supabase/client';
+import { createSupabaseServerClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -11,6 +11,7 @@ export async function createPostAction(postData: {
   tags: { id: string; text: string }[];
   post_type: string;
 }) {
+  const supabase = createSupabaseServerClient();
   const { title, content, description, tags, post_type } = postData;
 
   // Generate slug
@@ -55,6 +56,7 @@ export async function updatePostAction(
     post_type: string;
   }
 ) {
+  const supabase = createSupabaseServerClient();
   const { title, content, description, tags, post_type } = postData;
 
   // Calculate read time
@@ -93,6 +95,7 @@ export async function updatePostAction(
 }
 
 export async function deleteMultiplePostsAction(ids: string[]) {
+  const supabase = createSupabaseServerClient();
   const { error } = await supabase.from('posts').delete().in('id', ids);
 
   if (error) {

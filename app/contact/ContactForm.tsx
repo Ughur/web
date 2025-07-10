@@ -3,9 +3,10 @@
 import { Mail, MessageCircle, MessageSquare, Send, User } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import useSound from '../hooks/useSound';
-import { supabase } from '@/utils/supabase/client';
+import { createSupabaseBrowserClient } from '@/utils/supabase/client';
 
 const ContactForm = () => {
+  const supabase = createSupabaseBrowserClient();
   const playSound = useSound();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

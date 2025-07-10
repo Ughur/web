@@ -1,6 +1,6 @@
 'use client';
 
-import { supabase } from '@/utils/supabase/client';
+import { createSupabaseBrowserClient } from '@/utils/supabase/client';
 import Link from 'next/link';
 import { PlusCircle, Trash2 } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
@@ -15,6 +15,7 @@ type Post = {
 };
 
 export default function PostsPage() {
+  const supabase = createSupabaseBrowserClient();
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();

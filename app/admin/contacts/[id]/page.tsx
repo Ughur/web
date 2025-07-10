@@ -1,7 +1,8 @@
-import { supabase } from '@/utils/supabase/client';
-import React from 'react'
+import { createSupabaseServerClient } from '@/utils/supabase/server';
+import React from 'react';
 
 const page = async ({ params }: { params: { id: string } }) => {
+  const supabase = createSupabaseServerClient();
   const { id } = await params;
   const { data: submission, error } = await supabase
     .from('contact_submissions')
@@ -18,7 +19,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       <p>Email: {submission.email}</p>
       <p>Message: {submission.message}</p>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

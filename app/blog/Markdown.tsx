@@ -12,13 +12,13 @@ const Markdown = ({ content }: { content: string }) => {
       rehypePlugins={[rehypeRaw]}
       components={{
         h1: ({ ...props }) => (
-          <h1 className='text-xl md:text-3xl font-bold my-4' {...props} />
+          <h1 className='text-xl md:text-3xl font-bold my-4 leading-snug' {...props} />
         ),
         h2: ({ ...props }) => (
-          <h2 className='text-lg md:text-2xl font-bold my-4' {...props} />
+          <h2 className='text-lg md:text-2xl font-bold my-4 leading-snug' {...props} />
         ),
         h3: ({ ...props }) => (
-          <h3 className='text-sm md:text-xl font-bold my-4' {...props} />
+          <h3 className='text-sm md:text-xl font-bold my-4 leading-snug' {...props} />
         ),
         p: ({ ...props }) => (
           <p className='text-base md:text-lg my-4' {...props} />
