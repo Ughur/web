@@ -4,7 +4,7 @@ import { createSupabaseServerClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 
 export async function deleteMultipleContactsAction(ids: string[]) {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { error } = await supabase
     .from('contact_submissions')
     .delete()

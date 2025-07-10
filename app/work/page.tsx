@@ -11,7 +11,7 @@ const statusColors: { [key: string]: string } = {
 };
 
 const page = async () => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: projects, error } = await supabase
     .from('projects')
     .select('*')

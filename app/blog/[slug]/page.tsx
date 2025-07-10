@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { createSupabaseServerClient } from '@/utils/supabase/server';
 
 const page = async ({ params }: { params: { slug: string } }) => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: post, error } = await supabase
     .from('posts')
     .select('*')

@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from '@/utils/supabase/server';
 import React from 'react';
 
 const page = async ({ params }: { params: { id: string } }) => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { id } = await params;
   const { data: submission, error } = await supabase
     .from('contact_submissions')

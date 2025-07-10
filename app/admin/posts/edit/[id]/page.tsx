@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from '@/utils/supabase/server';
 import EditPostForm from './EditPostForm';
 
 const page = async ({ params }: { params: { id: string } }) => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: post, error } = await supabase
     .from('posts')
     .select('*')

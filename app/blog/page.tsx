@@ -18,7 +18,7 @@ const postTypeColors: { [key: string]: string } = {
 };
 
 const page = async () => {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { data: posts, error } = await supabase
     .from('posts')
     .select('*')

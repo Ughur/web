@@ -15,7 +15,7 @@ async function getStats(supabase: SupabaseClient) {
 }
 
 export default async function AdminDashboardPage() {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const { postCount, contactCount } = await getStats(supabase);
 
   return (
