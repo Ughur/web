@@ -39,7 +39,7 @@ const page = async () => {
           {projects?.map((project) => (
             <div
               key={project.id}
-              className='card p-5 space-y-2 hover-border-accent-pink'
+              className='card p-5 flex flex-col justify-between hover-border-accent-pink'
             >
               <div className='flex items-center gap-2'>
                 <Rocket className='icon-primary' />
@@ -53,7 +53,7 @@ const page = async () => {
                 </p>
               </div>
               <p>{project.description}</p>
-              <h2 className='text-accent-pink mt-5'>Tech Stack:</h2>
+              <h2 className='text-accent-pink mt-5 mb-2'>Tech Stack:</h2>
               <ul className='flex flex-wrap gap-2'>
                 {project.tech_stack?.map((tech: string) => (
                   <li key={tech} className='tag flex items-center gap-2'>
