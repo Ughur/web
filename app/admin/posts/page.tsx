@@ -30,7 +30,7 @@ export default function PostsPage() {
       if (error) console.error('Error fetching posts:', error);
     };
     fetchPosts();
-  }, []);
+  }, [supabase]);
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {

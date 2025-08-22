@@ -13,8 +13,10 @@ type Project = {
   status: string;
 };
 
+// Create Supabase client outside component to avoid recreation on each render
+const supabase = createSupabaseBrowserClient();
+
 export default function ProjectsPage() {
-  const supabase = createSupabaseBrowserClient();
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isPending, startTransition] = useTransition();
@@ -29,7 +31,7 @@ export default function ProjectsPage() {
       if (error) console.error('Error fetching projects:', error);
     };
     fetchProjects();
-  }, []);
+  }, []); // No need for supabase in deps as it's now constant
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {

@@ -2,7 +2,6 @@
 
 import { useFormState } from 'react-dom';
 import { login } from './actions';
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
 const initialState = {

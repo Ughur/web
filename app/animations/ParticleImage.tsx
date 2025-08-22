@@ -408,6 +408,7 @@ const ParticleImage = ({
       isComponentMounted = false;
       if (p5Instance) {
         p5Instance.remove();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         containerRef.current?.childNodes.forEach((node) => node.remove());
       }
     };

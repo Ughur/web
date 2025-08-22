@@ -4,7 +4,6 @@ import { createSupabaseBrowserClient } from '@/utils/supabase/client';
 import { Trash2 } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { deleteMultipleContactsAction } from './actions';
-import Link from 'next/link';
 
 type Submission = {
   id: string;
@@ -30,7 +29,7 @@ export default function ContactSubmissionsPage() {
       if (error) console.error('Error fetching submissions', error);
     };
     fetchSubmissions();
-  }, []);
+  }, [supabase]);
 
   const handleSelectAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
