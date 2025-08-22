@@ -1,7 +1,7 @@
 import { createSupabaseServerClient } from '@/utils/supabase/server';
 import EditPostForm from './EditPostForm';
 
-const page = async ({ params }: { params: { id: string } }) => {
+const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const supabase = await createSupabaseServerClient();
   const { id } = await params;
   const { data: post, error } = await supabase

@@ -12,7 +12,7 @@ import Markdown from '../Markdown';
 import Link from 'next/link';
 import { createSupabaseServerClient } from '@/utils/supabase/server';
 
-const page = async ({ params }: { params: { slug: string } }) => {
+const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const supabase = await createSupabaseServerClient();
   const { slug } = await params;
   const { data: post, error } = await supabase

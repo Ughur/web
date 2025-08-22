@@ -29,7 +29,7 @@ export default function EditPostForm({ post }: { post: Post }) {
   const [description, setDescription] = useState(post.description);
   const [content, setContent] = useState(post.content);
   const [tags, setTags] = useState<Tag[]>(
-    post.tags.map((tag) => ({ id: tag, text: tag }))
+    post.tags.map((tag) => ({ id: tag, text: tag, className: '' }))
   );
   const [postType, setPostType] = useState(post.post_type);
   const [error, setError] = useState<string | null>(null);
