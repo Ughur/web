@@ -25,7 +25,7 @@ export default function NewProjectPage() {
         name,
         description,
         status,
-        tech_stack,
+        tech_stack: tech_stack.map(({ id, text }) => ({ id, text })),
         repo_url,
         demo_url,
       });
