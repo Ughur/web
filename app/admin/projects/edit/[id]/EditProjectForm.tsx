@@ -22,7 +22,7 @@ export default function EditProjectForm({ project }: { project: Project }) {
   const [description, setDescription] = useState(project.description || '');
   const [status, setStatus] = useState(project.status);
   const [tech_stack, setTechStack] = useState<Tag[]>(
-    (project.tech_stack || []).map((tag) => ({ id: tag, text: tag }))
+    (project.tech_stack || []).map((tag) => ({ id: tag, text: tag, className: '' }))
   );
   const [repo_url, setRepoUrl] = useState(project.repo_url || '');
   const [demo_url, setDemoUrl] = useState(project.demo_url || '');
@@ -38,7 +38,7 @@ export default function EditProjectForm({ project }: { project: Project }) {
         name,
         description,
         status,
-        tech_stack,
+        tech_stack: tech_stack.map(({ id, text }) => ({ id, text })),
         repo_url,
         demo_url,
       });
