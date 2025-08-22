@@ -65,7 +65,7 @@ export default function EditPostForm({ post }: { post: Post }) {
         title,
         content,
         description,
-        tags,
+        tags: tags.map(({ id, text }) => ({ id, text })),
         post_type: postType,
       });
 
